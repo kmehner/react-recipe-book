@@ -2,9 +2,17 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import MealDetail from './MealDetail'
 
+// TODO list
+// Add the save meal button to the detail component 
+// Add a saved meals section
+// Add a saved meals section to the app component 
+// Function to save meals 
+
 function App() {
   const [meals, setMeals] = useState([])
   const [selectedMeal, setSelectedMeal] = useState(null)
+  const [saved, setSaved] = useState([])
+  const [savedIds, setSavedIds] = useState(["52795"])
 
   useEffect(() => {
     // fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=chicken")
@@ -53,7 +61,9 @@ function App() {
 
       <div className='meal-detail'>
         { selectedMeal ? (
-          <MealDetail meal={selectedMeal}/>
+          <>
+            <MealDetail meal={selectedMeal} saved={saved} savedIds={savedIds}/>
+          </>
         ) : (
           <p className='fallback-message'>Click a recipe to see details</p>
         ) }
