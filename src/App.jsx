@@ -48,6 +48,10 @@ function App() {
     // Some is a include method that works with objects 
   }
 
+  const resetSaved = () => {
+    setSaved([])
+  }
+
   useEffect(() => {
     // fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=chicken")
     //   .then((res) => res.json())
@@ -103,21 +107,25 @@ function App() {
       </div>
 
       <div className='saved-meals'>
-        <h2>💾 Favorite Recipes</h2>
+        <div className='saved-list'>
+          <h2>💾 Favorite Recipes</h2>
 
-        <ul>
-          {saved.map(meal => (
-            <li
-              key={meal.idMeal}
-              className='meal-item'
-              onClick={() => setSelectedMeal(meal)}
-            >
-              <div>
-                {meal.strMeal}
-              </div>
-            </li>
-          ))}
-        </ul>
+        <button onClick={()=> resetSaved()}>Clear List</button>
+
+          <ul>
+            {saved.map(meal => (
+              <li
+                key={meal.idMeal}
+                className='meal-item'
+                onClick={() => setSelectedMeal(meal)}
+              >
+                <div>
+                  {meal.strMeal}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
 
       </div>
 
