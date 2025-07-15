@@ -103,7 +103,21 @@ function App() {
       </div>
 
       <div className='saved-meals'>
-        <h2>💾 Saved Recipes</h2>
+        <h2>💾 Favorite Recipes</h2>
+
+        <ul>
+          {saved.map(meal => (
+            <li
+              key={meal.idMeal}
+              className='meal-item'
+              onClick={() => setSelectedMeal(meal)}
+            >
+              <div>
+                {meal.strMeal}
+              </div>
+            </li>
+          ))}
+        </ul>
 
       </div>
 
