@@ -12,7 +12,41 @@ function App() {
   const [meals, setMeals] = useState([])
   const [selectedMeal, setSelectedMeal] = useState(null)
   const [saved, setSaved] = useState([])
-  const [savedIds, setSavedIds] = useState(["52795"])
+
+  // const handleSaveMeal = () => {
+  //   console.log('Starting save meal functionality');
+  //   if (isSaved) {
+  //     saved = saved.filter(savedMeal => savedMeal.idMeal !== meal.idMeal);
+  //     isSaved = false; // Update isSaved to false after removing
+  //     console.log('Meal removed from saved meals');
+  //   } else { 
+  //     saved = [...saved, meal];
+  //     isSaved = true; // Update isSaved to true after adding
+  //     console.log('Meal added to saved meals');
+  //     // saved.push(meal); // 
+  //   }
+
+  //   console.log('Current saved meals:', saved);
+  //   console.log(isSaved)
+  // }
+
+    // toggle handler in parent
+    // meal is passed down to MealDetail
+    // in MealDetail, we call the handleSaveMeal function
+    // and pass the meal to it
+
+
+  const handleSaveMeal = meal => {
+    // setSaved function (saved, setSaved) State hook
+    // If meal is already saved, remove it from saved meals
+    setSaved(prev =>
+      prev.some(m => m.idMeal === meal.idMeal)
+        ? prev.filter(m => m.idMeal !== meal.idMeal)
+        : [...prev, meal]
+    )
+
+    // Some is a include method that works with objects 
+  }
 
   useEffect(() => {
     // fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=chicken")
@@ -51,7 +85,6 @@ function App() {
             >
               <div>
                 {meal.strMeal}
-                {/* <MealDetail meal={meal}/> */}
               </div>
             </li>
           ))}
@@ -62,11 +95,15 @@ function App() {
       <div className='meal-detail'>
         { selectedMeal ? (
           <>
-            <MealDetail meal={selectedMeal} saved={saved} savedIds={savedIds}/>
+            <MealDetail meal={selectedMeal} saved={saved} onToggleSave={handleSaveMeal}/>
           </>
         ) : (
           <p className='fallback-message'>Click a recipe to see details</p>
         ) }
+      </div>
+
+      <div className='saved-meals'>
+        <h2>💾 Saved Recipes</h2>
 
       </div>
 

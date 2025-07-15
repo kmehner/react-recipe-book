@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { use } from 'react'
 import "./MealDetail.css"
 import { FaBookmark } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa";
@@ -18,15 +18,17 @@ function getIngredients(meal) {
   return ingredients;
 } 
 
-const MealDetail = ({ meal, saved, savedIds }) => {
+const MealDetail = ({ meal, saved, onToggleSave }) => {
   if (!meal) return null; 
   const ingredients = getIngredients(meal);
+  const isSaved = saved.some(savedMeal => savedMeal.idMeal === meal.idMeal);
+
 
   return (
     <div className='meal-detail-card'>
       <h2>{meal.strMeal}</h2>
       <button 
-        onClick={() => console.log('Save meal functionality not implemented yet')} 
+        onClick={() => onToggleSave(meal)} 
         style={{ 
           background: 'none', 
           border: 'none', 
@@ -38,7 +40,7 @@ const MealDetail = ({ meal, saved, savedIds }) => {
         title="Save Recipe"
       >
         {/* Filled bookmark if saved includes meal, unfilled bookmark otherwise */}
-        {savedIds.includes(meal.idMeal) ? (
+        {isSaved ? (
           <FaBookmark style={{ color: 'black' }} />
         ) : (
           <FaRegBookmark style={{ color: 'black' }} />
